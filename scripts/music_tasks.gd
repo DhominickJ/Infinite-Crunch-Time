@@ -164,6 +164,7 @@ func _on_button_pressed(index):
 		sequence_timer.stop()
 		GlobalConfig.music_tasks_completed += 1
 		GlobalConfig.current_time += 3  # Add 3 hours for each task
+		GlobalConfig.music_sequence = sequence.duplicate()  # Store the sequence for background music
 		print("Music task", GlobalConfig.music_tasks_completed, "completed")
 		if GlobalConfig.music_tasks_completed < 1:
 			# Start second task with longer sequence

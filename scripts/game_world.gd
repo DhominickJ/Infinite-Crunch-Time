@@ -13,6 +13,23 @@ var asset_positions = {
 	"house": Vector2(392, 48)
 }
 
+# Music playback
+var sounds = [
+	preload("res://assets/sounds/D#6.ogg"),
+	preload("res://assets/sounds/C#6.ogg"),
+	preload("res://assets/sounds/A#5.ogg"),
+	preload("res://assets/sounds/F#5.ogg"),
+	preload("res://assets/sounds/D#5.ogg"),
+	preload("res://assets/sounds/C#5.ogg"),
+	preload("res://assets/sounds/F#4.ogg"),
+	preload("res://assets/sounds/D#4.ogg"),
+	preload("res://assets/sounds/C#4.ogg")
+]
+
+@onready var music_player = $AudioStreamPlayer
+@onready var music_timer = $Timer
+var current_note_index = 0
+
 func _ready():
 	# Show completed scene-based assets
 	for asset_name in GlobalConfig.completed_art_assets:
@@ -32,3 +49,30 @@ func _ready():
 				sprite.visible = true
 				add_child(sprite)
 				print("Added completed sprite asset: ", asset_name)
+	
+	# Start background music if sequence exists
+	if GlobalConfig.music_sequence.size() > 0:
+		start_background_music()
+
+func start_background_music():
+	music_timer.wait_time = 0.8  # Note delay
+	music_timer.timeout.connect(_on_music_timer_timeout)
+	play_next_note()
+
+func play_next_note():
+	if GlobalConfig.music_sequence.size() == 0:
+		return
+	
+	var note_index = GlobalConfig.music_sequence[current_note_index]
+	if note_index >= 0 and note_index < sounds.size():
+		music_player.stream = sounds[note_index]
+		music_player.play()
+	
+	current_note_index += 1
+	if current_note_index >= GlobalConfig.music_sequence.size():
+		current_note_index = 0  # Loop back to start
+	
+	music_timer.start()
+
+func _on_music_timer_timeout():
+	play_next_note()

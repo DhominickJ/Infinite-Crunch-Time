@@ -41,6 +41,10 @@ shape = SubResource("RectangleShape2D_0vfqx")
 position = Vector2(195, -5)
 zoom = Vector2(3.5, 3.5)
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+
 [node name="ground" type="StaticBody2D" parent="."]
 position = Vector2(194, 105.5)
 
