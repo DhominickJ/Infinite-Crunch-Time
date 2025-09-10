@@ -1,11 +1,12 @@
 extends Control
 
-@export var source_image_texture: Texture2D = preload("res://assets/objects/cherry.png")
-@export var second_image_texture: Texture2D = preload("res://assets/objects/sample_butterfly.png")
+# Removed fixed textures, will load random from assets/sprites
 
 @onready var timer_label = $"../timer_label"
 @onready var timer = $"../timer_label/Timer"
 var total_time = 120
+var possible_textures: Array = []
+var selected_asset_name: String = ""
 
 # --- Internal state ---
 var color_to_index: Dictionary = {}   # key: String(color), value: int index
@@ -17,18 +18,42 @@ var selected_index: int = -1
 func _ready() -> void:
 	timer.timeout.connect(_on_timer_timeout)
 	_update_label()
+	load_possible_textures()
 	image_conversion()
 
 
-func image_conversion():
-	# SELECT IMAGE BASED ON TASK PROGRESS
-	var current_texture = source_image_texture
-	if GlobalConfig.artwork_tasks_completed >= 1:
-		current_texture = second_image_texture
+func load_possible_textures():
+	var dir = DirAccess.open("res://assets/sprites")
+	if dir:
+		dir.list_dir_begin()
+		var file = dir.get_next()
+		while file != "":
+			if file.ends_with(".png") or file.ends_with(".jpg"):
+				possible_textures.append(file.get_basename())  # Store name without extension
+			file = dir.get_next()
+		dir.list_dir_end()
 
-	# READ IMAGE AND CONVERT TO RGBA8
-	var img: Image = current_texture.get_image()
-	img.convert(Image.FORMAT_RGBA8)
+func image_conversion():
+	# SELECT IMAGE: Always start with character if not completed
+	var img: Image
+	if possible_textures.size() > 0:
+		if "character" in possible_textures and "character" not in GlobalConfig.completed_art_assets:
+			selected_asset_name = "character"
+		else:
+			selected_asset_name = possible_textures[randi() % possible_textures.size()]
+		
+		var texture_path = "res://assets/sprites/" + selected_asset_name + ".png"
+		img = Image.load_from_file(texture_path)
+		if img:
+			img.convert(Image.FORMAT_RGBA8)
+		else:
+			# Fallback to a default if loading fails
+			img = Image.create(64, 64, false, Image.FORMAT_RGBA8)
+			img.fill(Color.WHITE)
+	else:
+		# Fallback
+		img = Image.create(64, 64, false, Image.FORMAT_RGBA8)
+		img.fill(Color.WHITE)
 
 	var next_number: int = 1
 	var img_w := img.get_width()
@@ -205,6 +230,9 @@ func _check_completion() -> void:
 	print("Artwork task", GlobalConfig.artwork_tasks_completed + 1, "completed")
 	GlobalConfig.artwork_tasks_completed += 1
 	GlobalConfig.current_time += 3  # Add 3 hours for each task
+	# Store the completed asset
+	if selected_asset_name != "":
+		GlobalConfig.completed_art_assets.append(selected_asset_name)
 	if GlobalConfig.artwork_tasks_completed < 1:
 		# Reset for next task
 		for tile in tile_nodes.values():

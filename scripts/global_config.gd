@@ -21,6 +21,9 @@ var programming_tasks_completed = 0
 var artwork_tasks_completed = 0
 var music_tasks_completed = 0
 
+# COMPLETED ART ASSETS
+var completed_art_assets: Array = []  # List of completed art asset names (without extension)
+
 # BOOL VARIABLES (for backward compatibility, but will be replaced)
 var finished_programming_task = false
 var finished_artwork_task = false
@@ -32,6 +35,7 @@ func reset_day():
 	programming_tasks_completed = 0
 	artwork_tasks_completed = 0
 	music_tasks_completed = 0
+	completed_art_assets = []
 	finished_programming_task = false
 	finished_artwork_task = false
 	finished_music_task = false

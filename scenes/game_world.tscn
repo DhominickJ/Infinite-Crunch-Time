@@ -1,11 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cy3q8k7gc8ywg"]
+[gd_scene load_steps=8 format=3 uid="uid://cy3q8k7gc8ywg"]
 
 [ext_resource type="PackedScene" uid="uid://cycrkg2t5vs4" path="res://scenes/character.tscn" id="1_0biqy"]
 [ext_resource type="PackedScene" uid="uid://bfx3dagqelacb" path="res://scenes/enemy.tscn" id="1_ywgp6"]
 [ext_resource type="PackedScene" path="res://scenes/cherry.tscn" id="2_47u71"]
-[ext_resource type="Texture2D" uid="uid://dta8w3e5xiiw8" path="res://assets/objects/house.png" id="4_6c6v5"]
-[ext_resource type="Texture2D" uid="uid://b1lbnop2i20qc" path="res://assets/objects/stone.png" id="5_bhwwd"]
-[ext_resource type="Texture2D" uid="uid://d0ly3svoyj75" path="res://assets/objects/tree.png" id="6_pdbwf"]
+[ext_resource type="Script" uid="uid://b8qw1y57euudk" path="res://scripts/game_world.gd" id="7_game_world"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ywgp6"]
 size = Vector2(20, 92)
@@ -17,6 +15,7 @@ size = Vector2(20, 95)
 size = Vector2(458, 103)
 
 [node name="game_scene" type="Node2D"]
+script = ExtResource("7_game_world")
 
 [node name="hpBar" type="ProgressBar" parent="."]
 offset_left = -33.0
@@ -53,15 +52,3 @@ position = Vector2(231, 36)
 
 [node name="slime" parent="." instance=ExtResource("1_ywgp6")]
 position = Vector2(151, 38)
-
-[node name="House" type="Sprite2D" parent="."]
-position = Vector2(392, 48)
-texture = ExtResource("4_6c6v5")
-
-[node name="Stone" type="Sprite2D" parent="."]
-position = Vector2(270, 43)
-texture = ExtResource("5_bhwwd")
-
-[node name="Tree" type="Sprite2D" parent="."]
-position = Vector2(369, 40)
-texture = ExtResource("6_pdbwf")
