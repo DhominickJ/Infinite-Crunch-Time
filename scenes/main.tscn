@@ -84,3 +84,4 @@ theme_override_font_sizes/font_size = 40
 text = "Options"
 
 [connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]

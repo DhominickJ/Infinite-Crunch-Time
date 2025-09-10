@@ -1,6 +1,5 @@
 extends TextureRect
 
-@onready var timer = $HeaderMargin/Header/Timer 
 @onready var current_time = $HeaderMargin/Header/Time
 @onready var daysLeft_label = $HeaderMargin/Header/TurnsLeft
 
@@ -29,7 +28,7 @@ func _on_programming_button_pressed() -> void:
 
 func _on_music_button_pressed() -> void:
 	if GlobalConfig.finished_music_task == false:
-		pass
+		get_tree().change_scene_to_file("res://scenes/music_tasks.tscn")
 	else:
 		print("All tasks in this workstation is done")
 
