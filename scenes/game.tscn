@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://baj7ld6y3q4sl"]
+[gd_scene load_steps=11 format=3 uid="uid://baj7ld6y3q4sl"]
 
 [ext_resource type="Texture2D" uid="uid://c35kanw3tlvek" path="res://assets/objects/citybackground.png" id="1_iywne"]
 [ext_resource type="Script" uid="uid://0euxbx5caw8" path="res://scripts/main.gd" id="2_iywne"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bgwn8tryx6ogw" path="res://assets/icons/Clock (Main) .png" id="6_vtaks"]
 [ext_resource type="Texture2D" uid="uid://bhkl3j55d6k28" path="res://assets/icons/Music Station.png" id="7_vtaks"]
 [ext_resource type="Texture2D" uid="uid://oy6hg7ajrmoo" path="res://assets/icons/Program Station.png" id="8_kvpfn"]
+[ext_resource type="Texture2D" uid="uid://v3cox12lin8w" path="res://assets/objects/cherry.png" id="10_vtaks"]
 
 [node name="base_game" type="TextureRect"]
 anchors_preset = 15
@@ -202,6 +203,15 @@ texture_normal = ExtResource("8_kvpfn")
 stretch_mode = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ProgrammingButton"]
+
+[node name="CherryButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 1031.0
+offset_top = 418.0
+offset_right = 1123.0
+offset_bottom = 497.0
+texture_normal = ExtResource("10_vtaks")
+stretch_mode = 0
 
 [connection signal="pressed" from="ArtButton" to="." method="_on_art_button_pressed"]
 [connection signal="pressed" from="MusicButton" to="." method="_on_music_button_pressed"]

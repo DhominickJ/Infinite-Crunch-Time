@@ -85,19 +85,19 @@ func generate_choices(dict):
 #		ADD THE NODES
 		choices.add_child(btn)
 
-#	EVALUATE THE PLAYER'S CHOCIES
+#	EVALUATE THE PLAYER'S CHOICES
 func choice_evaluation(choice):
 	var dict = debug_dict.get(quiz_stage)
 	if choice == dict["correct_choice"]:
-		quiz_stage += 1
-		print("Player Wins")
-		if quiz_stage < debug_dict.size():
+		if quiz_stage < debug_dict.size() - 1:  # Not the last question
+			quiz_stage += 1
 			load_dict(quiz_stage)
-		else:
-			evaluate_performance()
-			GlobalConfig.finished_programming_task = true
+		else:  # Last question
+			GlobalConfig.programming_tasks_completed += 1
+			GlobalConfig.current_time += 3  # Add 3 hours for each task
+			print("Programming task", GlobalConfig.programming_tasks_completed, "completed")
+			GlobalConfig.finished_programming_task = true  # For compatibility
 			get_tree().change_scene_to_file("res://scenes/game.tscn")
-			
 	else:
 		print("Wrong Choice")
 

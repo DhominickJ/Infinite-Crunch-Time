@@ -60,7 +60,9 @@ func start_game():
 	sequence = []
 	player_sequence = []
 	current_index = 0
-	add_random_note()
+	var initial_length = 4 if GlobalConfig.music_tasks_completed == 0 else 5
+	for i in range(initial_length):
+		add_random_note()
 	update_round_label()
 	play_sequence()
 
@@ -160,17 +162,24 @@ func _on_button_pressed(index):
 	if current_index == sequence.size():
 		# sequence complete
 		sequence_timer.stop()
-		if sequence.size() == 5:
-			play_melody()
-			await get_tree().create_timer(2.0).timeout
-			get_tree().change_scene_to_file("res://scenes/main.tscn")
-		else:
+		GlobalConfig.music_tasks_completed += 1
+		GlobalConfig.current_time += 3  # Add 3 hours for each task
+		print("Music task", GlobalConfig.music_tasks_completed, "completed")
+		if GlobalConfig.music_tasks_completed < 1:
+			# Start second task with longer sequence
 			player_sequence = []
 			current_index = 0
-			add_random_note()
+			sequence = []
+			for i in range(6):  # Longer sequence for second task
+				add_random_note()
 			update_round_label()
 			update_progress_bar()
 			play_sequence()
+		else:
+			play_melody()
+			await get_tree().create_timer(2.0).timeout
+			GlobalConfig.finished_music_task = true  # For compatibility
+			get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 func play_melody():
 	is_player_turn = false

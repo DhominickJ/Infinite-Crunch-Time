@@ -1,8 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://0e7lo2qhv6y1"]
+[gd_scene load_steps=10 format=3 uid="uid://cy3q8k7gc8ywg"]
 
-[ext_resource type="PackedScene" uid="uid://36ayemo4gr83" path="res://scenes/character.tscn" id="1_0biqy"]
-[ext_resource type="PackedScene" uid="uid://dth6b4iv0bglb" path="res://scenes/enemy.tscn" id="1_ywgp6"]
-[ext_resource type="PackedScene" uid="uid://c4rso7wvmk1d1" path="res://scenes/cherry.tscn" id="2_47u71"]
+[ext_resource type="PackedScene" uid="uid://cycrkg2t5vs4" path="res://scenes/character.tscn" id="1_0biqy"]
+[ext_resource type="PackedScene" uid="uid://bfx3dagqelacb" path="res://scenes/enemy.tscn" id="1_ywgp6"]
+[ext_resource type="PackedScene" path="res://scenes/cherry.tscn" id="2_47u71"]
 [ext_resource type="Texture2D" uid="uid://dta8w3e5xiiw8" path="res://assets/objects/house.png" id="4_6c6v5"]
 [ext_resource type="Texture2D" uid="uid://b1lbnop2i20qc" path="res://assets/objects/stone.png" id="5_bhwwd"]
 [ext_resource type="Texture2D" uid="uid://d0ly3svoyj75" path="res://assets/objects/tree.png" id="6_pdbwf"]

@@ -1,6 +1,7 @@
 extends Control
 
 @export var source_image_texture: Texture2D = preload("res://assets/objects/cherry.png")
+@export var second_image_texture: Texture2D = preload("res://assets/objects/sample_butterfly.png")
 
 @onready var timer_label = $"../timer_label"
 @onready var timer = $"../timer_label/Timer"
@@ -20,8 +21,13 @@ func _ready() -> void:
 
 
 func image_conversion():
+	# SELECT IMAGE BASED ON TASK PROGRESS
+	var current_texture = source_image_texture
+	if GlobalConfig.artwork_tasks_completed >= 1:
+		current_texture = second_image_texture
+
 	# READ IMAGE AND CONVERT TO RGBA8
-	var img: Image = source_image_texture.get_image()
+	var img: Image = current_texture.get_image()
 	img.convert(Image.FORMAT_RGBA8)
 
 	var next_number: int = 1
@@ -89,6 +95,7 @@ func image_conversion():
 			label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 			label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			label.modulate = Color.BLACK
+			label.add_theme_font_size_override("font_size", max(16, pixel_size / 2))
 			center.add_child(label)
 			# ===========================
 
@@ -177,7 +184,7 @@ func _flood_fill(start_pos: Vector2i, num: int) -> void:
 		tile.add_theme_stylebox_override("panel", sb)
 
 		# hide number label
-		var lbl := tile.get_node_or_null("LabelCenter/NumberLabel")
+		var lbl := tile.get_node_or_null("LabelCenter/NumberLabel") as Label
 		if lbl:
 			lbl.visible = false
 
@@ -195,10 +202,28 @@ func _check_completion() -> void:
 	for tile in tile_nodes.values():
 		if tile.get_meta("filled") == false:
 			return # stop early if we find at least one unfilled tile
-	print("All tiles filled")
-	GlobalConfig.finished_artwork_task = true
-	evaluate_performance()
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	print("Artwork task", GlobalConfig.artwork_tasks_completed + 1, "completed")
+	GlobalConfig.artwork_tasks_completed += 1
+	GlobalConfig.current_time += 3  # Add 3 hours for each task
+	if GlobalConfig.artwork_tasks_completed < 1:
+		# Reset for next task
+		for tile in tile_nodes.values():
+			tile.set_meta("filled", false)
+			var sb := StyleBoxFlat.new()
+			sb.bg_color = Color.WHITE
+			sb.border_color = Color.BLACK
+			sb.border_width_left = 1
+			sb.border_width_top = 1
+			sb.border_width_right = 1
+			sb.border_width_bottom = 1
+			tile.add_theme_stylebox_override("panel", sb)
+			var lbl := tile.get_node_or_null("LabelCenter/NumberLabel") as Label
+			if lbl:
+				lbl.visible = true
+		image_conversion()  # Load next image
+	else:
+		GlobalConfig.finished_artwork_task = true  # For compatibility
+		get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 
 func _on_timer_timeout():
