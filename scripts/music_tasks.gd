@@ -17,6 +17,7 @@ var hint_button
 var slow_button
 var original_playback_speed = 0.5
 var playback_speed = 0.5
+var note_delay = 0.8  # Delay between notes in seconds
 
 func _ready():
 	randomize()
@@ -92,9 +93,11 @@ func _on_slow_pressed():
 	if score >= 200:
 		score -= 200
 		update_score_label()
-		playback_speed = 1.0  # slower
+		playback_speed = 1.0  # slower visual feedback
+		note_delay = 1.2  # slower delay between notes
 		await get_tree().create_timer(5.0).timeout  # duration
 		playback_speed = original_playback_speed
+		note_delay = 0.8
 
 func _on_sequence_timer_timeout():
 	if is_player_turn:
@@ -115,7 +118,7 @@ func play_sequence():
 	for button in buttons:
 		button.disabled = true
 	for note in sequence:
-		await get_tree().create_timer(playback_speed).timeout
+		await get_tree().create_timer(note_delay).timeout
 		buttons[note].self_modulate *= 2  # brighter
 		audio_player.stream = sounds[note]
 		audio_player.play()
@@ -174,4 +177,4 @@ func play_melody():
 	for note in sequence:
 		audio_player.stream = sounds[note]
 		audio_player.play()
-		await get_tree().create_timer(0.6).timeout
+		await get_tree().create_timer(note_delay).timeout

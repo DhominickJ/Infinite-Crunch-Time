@@ -5,6 +5,7 @@ extends TextureRect
 @onready var art_button = $ArtButton
 @onready var music_button = $MusicButton
 @onready var programming_button = $ProgrammingButton
+@onready var background = self
 
 # Background textures for different times of day
 @onready var morning_texture = preload("res://assets/objects/citymorning.png")
@@ -14,6 +15,7 @@ extends TextureRect
 func _ready() -> void:
 	setup_button_animations()
 	update_background()  # Set initial background
+	start_background_flicker()  # Start simple flicker animation
 	pass
 
 func setup_button_animations():
@@ -84,3 +86,11 @@ func update_background():
 	else:
 		# Night (6PM - 6AM)
 		texture = night_texture
+
+func start_background_flicker():
+	if background:
+		var flicker_tween = create_tween().set_loops()
+		# Fade out to 30% opacity
+		flicker_tween.tween_property(background, "modulate:a", 0.8, 1.0).set_trans(Tween.TRANS_SINE)
+		# Fade back to full opacity
+		flicker_tween.tween_property(background, "modulate:a", 1.0, 1.9).set_trans(Tween.TRANS_SINE)
