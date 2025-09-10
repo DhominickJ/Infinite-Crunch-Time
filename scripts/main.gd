@@ -35,8 +35,7 @@ func _physics_process(delta):
 	if GlobalConfig.days_left <= 0 and GlobalConfig.current_time >= 18:
 		GlobalConfig.game_over()
 	display_time()
-
-
+	
 func _on_art_button_pressed() -> void:
 	if GlobalConfig.finished_artwork_task == false:
 		get_tree().change_scene_to_file("res://scenes/artwork_tasks.tscn")
@@ -54,8 +53,6 @@ func _on_music_button_pressed() -> void:
 		get_tree().change_scene_to_file("res://scenes/music_tasks.tscn")
 	else:
 		print("All tasks in this workstation is done")
-
-	
 
 #	LOGIC FOR DISPLAYING THE CURRENT TIME
 func display_time():

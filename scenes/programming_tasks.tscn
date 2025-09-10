@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://0le3lan8cwht"]
 
 [ext_resource type="Texture2D" uid="uid://dtwthtfvwws0w" path="res://assets/bg/green_bg.png" id="1_p7iqy"]
-[ext_resource type="Script" path="res://scripts/programming_tasks.gd" id="2_b5eq2"]
+[ext_resource type="Script" uid="uid://dxjsjv74nohrf" path="res://scripts/programming_tasks.gd" id="2_b5eq2"]
 [ext_resource type="Texture2D" uid="uid://y4akwwgxlt5w" path="res://assets/objects/desktop_monitor.png" id="2_ggaot"]
 [ext_resource type="FontFile" uid="uid://bg727n08n56s2" path="res://fonts/depixel/DePixelHalbfett.otf" id="3_ggaot"]
 [ext_resource type="FontFile" uid="uid://bqi1tvhv2nf51" path="res://fonts/depixel/depixelhalbfett.woff2" id="5_upao5"]

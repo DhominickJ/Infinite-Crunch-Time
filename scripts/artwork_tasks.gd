@@ -1,6 +1,6 @@
 extends Control
 
-@export var source_image_texture: Texture2D = preload("res://assets/objects/sample_butterfly.png")
+@export var source_image_texture: Texture2D = preload("res://assets/objects/cherry.png")
 
 @onready var timer_label = $"../timer_label"
 @onready var timer = $"../timer_label/Timer"
