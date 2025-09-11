@@ -1,7 +1,6 @@
 extends Node2D
 
 @onready var asset_nodes = {
-	"character": $character,
 	"cherry": $cherry,
 	"slime": $slime
 }
@@ -13,24 +12,10 @@ var asset_positions = {
 	"house": Vector2(392, 48)
 }
 
-# Music playback
-var sounds = [
-	preload("res://assets/sounds/D#6.ogg"),
-	preload("res://assets/sounds/C#6.ogg"),
-	preload("res://assets/sounds/A#5.ogg"),
-	preload("res://assets/sounds/F#5.ogg"),
-	preload("res://assets/sounds/D#5.ogg"),
-	preload("res://assets/sounds/C#5.ogg"),
-	preload("res://assets/sounds/F#4.ogg"),
-	preload("res://assets/sounds/D#4.ogg"),
-	preload("res://assets/sounds/C#4.ogg")
-]
-
-@onready var music_player = $AudioStreamPlayer
-@onready var music_timer = $Timer
-var current_note_index = 0
-
 func _ready():
+	# Character is always visible (player)
+	$character.visible = true
+	
 	# Show completed scene-based assets
 	for asset_name in GlobalConfig.completed_art_assets:
 		if asset_name in asset_nodes:
@@ -53,6 +38,15 @@ func _ready():
 	# Start background music if sequence exists
 	if GlobalConfig.music_sequence.size() > 0:
 		start_background_music()
+	
+	# Show back button after 5 seconds
+	await get_tree().create_timer(5.0).timeout
+	back_button.visible = true
+	back_button.pressed.connect(_on_back_button_pressed)
+
+func _process(delta):
+	# Update HP bar
+	hp_bar.value = player.health
 
 func start_background_music():
 	music_timer.wait_time = 0.8  # Note delay
@@ -76,3 +70,6 @@ func play_next_note():
 
 func _on_music_timer_timeout():
 	play_next_note()
+
+func _on_back_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/game.tscn")

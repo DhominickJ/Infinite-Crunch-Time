@@ -38,7 +38,7 @@ func reset_day():
 	programming_tasks_completed = 0
 	artwork_tasks_completed = 0
 	music_tasks_completed = 0
-	completed_art_assets = []
+	# Keep completed_art_assets for progression
 	music_sequence = []
 	finished_programming_task = false
 	finished_artwork_task = false

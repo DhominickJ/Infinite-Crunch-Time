@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cy3q8k7gc8ywg"]
+[gd_scene load_steps=9 format=3 uid="uid://cy3q8k7gc8ywg"]
 
 [ext_resource type="PackedScene" uid="uid://cycrkg2t5vs4" path="res://scenes/character.tscn" id="1_0biqy"]
 [ext_resource type="PackedScene" uid="uid://bfx3dagqelacb" path="res://scenes/enemy.tscn" id="1_ywgp6"]
 [ext_resource type="PackedScene" path="res://scenes/cherry.tscn" id="2_47u71"]
+[ext_resource type="Texture2D" uid="uid://b20t1fd816ohr" path="res://assets/objects/red_button.png" id="3_wbbl4"]
 [ext_resource type="Script" uid="uid://b8qw1y57euudk" path="res://scripts/game_world.gd" id="7_game_world"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ywgp6"]
@@ -18,10 +19,11 @@ size = Vector2(458, 103)
 script = ExtResource("7_game_world")
 
 [node name="hpBar" type="ProgressBar" parent="."]
-offset_left = -33.0
-offset_top = -132.0
-offset_right = 67.0
-offset_bottom = -105.0
+offset_left = -17.0
+offset_top = -115.0
+offset_right = 86.0
+offset_bottom = -100.0
+show_percentage = false
 
 [node name="left_border" type="Area2D" parent="."]
 
@@ -44,6 +46,15 @@ zoom = Vector2(3.5, 3.5)
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="BackButton" type="TextureButton" parent="."]
+offset_left = 328.0
+offset_top = -119.0
+offset_right = 393.0
+offset_bottom = -99.0
+texture_normal = ExtResource("3_wbbl4")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="ground" type="StaticBody2D" parent="."]
 position = Vector2(194, 105.5)

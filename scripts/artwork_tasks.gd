@@ -34,12 +34,14 @@ func load_possible_textures():
 		dir.list_dir_end()
 
 func image_conversion():
-	# SELECT IMAGE: Always start with character if not completed
+	# SELECT RANDOM IMAGE, excluding completed assets
 	var img: Image
 	if possible_textures.size() > 0:
-		if "character" in possible_textures and "character" not in GlobalConfig.completed_art_assets:
-			selected_asset_name = "character"
+		var available = possible_textures.filter(func(name): return name not in GlobalConfig.completed_art_assets)
+		if available.size() > 0:
+			selected_asset_name = available[randi() % available.size()]
 		else:
+			# All completed, select any
 			selected_asset_name = possible_textures[randi() % possible_textures.size()]
 		
 		var texture_path = "res://assets/sprites/" + selected_asset_name + ".png"
@@ -54,6 +56,7 @@ func image_conversion():
 		# Fallback
 		img = Image.create(64, 64, false, Image.FORMAT_RGBA8)
 		img.fill(Color.WHITE)
+
 
 	var next_number: int = 1
 	var img_w := img.get_width()

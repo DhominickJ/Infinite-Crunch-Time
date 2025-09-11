@@ -11,10 +11,11 @@ var is_dead: bool = false
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready() -> void:
+	add_to_group("enemy")
 	vision_area.area_entered.connect(_on_VisionArea_area_entered)
 	vision_area.area_exited.connect(_on_VisionArea_area_exited)
 	hitbox.area_entered.connect(on_enemy_hits_player)
-	hitbox. area_entered.connect(on_player_attack_hits_enemy)
+	hitbox.area_entered.connect(on_player_attack_hits_enemy)
 	respawn_timer.one_shot = false
 	respawn_timer.wait_time = 10.0
 	respawn_timer.timeout.connect(_on_respawn_timeout)
@@ -51,7 +52,7 @@ func die() -> void:
 	if not is_dead:
 		is_dead = true
 		hide()# hide enemy visually
-		$base_collision.disabled = true
+		$base_collision.set_deferred("disabled", true)
 		vision_area.monitoring = false
 		velocity = Vector2.ZERO
 		respawn_timer.start()
