@@ -27,6 +27,9 @@ var completed_art_assets: Array = []  # List of completed art asset names (witho
 # MUSIC SEQUENCE
 var music_sequence: Array = []  # List of note indices for background music
 
+# GAME WORLD VISIT FLAG
+var just_returned_from_game_world: bool = false
+
 # BOOL VARIABLES (for backward compatibility, but will be replaced)
 var finished_programming_task = false
 var finished_artwork_task = false

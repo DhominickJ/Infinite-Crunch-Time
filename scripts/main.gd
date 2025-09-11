@@ -12,13 +12,14 @@ extends TextureRect
 @onready var artwork_progress = $ProgressBars/Artworks
 @onready var music_progress = $ProgressBars/Music
 @onready var cherry_button = $CherryButton
+@onready var next_day_button = $"Next Day Button"
 
 # Background textures for different times of day
 @onready var morning_texture = preload("res://assets/objects/citymorning.png")
 @onready var noon_texture = preload("res://assets/objects/citynoon.png")
 @onready var night_texture = preload("res://assets/objects/citynight.png")
 
-func _ready() -> void:
+func _ready():
 	setup_button_animations()
 	update_background()  # Set initial background
 	start_background_flicker()  # Start simple flicker animation
@@ -26,6 +27,9 @@ func _ready() -> void:
 	cherry_button.visible = false
 	cherry_button.disabled = true
 	cherry_button.pressed.connect(_on_cherry_button_pressed)
+	next_day_button.visible = false
+	next_day_button.disabled = true
+	next_day_button.pressed.connect(_on_next_day_button_pressed)
 	check_all_tasks_completed()
 	pass
 
@@ -122,10 +126,31 @@ func update_progress_bars():
 
 func check_all_tasks_completed():
 	if GlobalConfig.is_all_tasks_completed():
-		print("All tasks completed! Show cherry button to proceed to game world.")
-		cherry_button.visible = true
-		cherry_button.disabled = false
-		# Do not advance day here; let the game_world handle it
+		if GlobalConfig.just_returned_from_game_world:
+			print("Returned from game world! Show next day button to advance.")
+			next_day_button.visible = true
+			next_day_button.disabled = false
+			cherry_button.visible = false
+		else:
+			print("All tasks completed! Show cherry button to proceed to game world.")
+			cherry_button.visible = true
+			cherry_button.disabled = false
+			next_day_button.visible = false
+	else:
+		cherry_button.visible = false
+		next_day_button.visible = false
 
 func _on_cherry_button_pressed():
+	GlobalConfig.just_returned_from_game_world = true
 	get_tree().change_scene_to_file("res://scenes/game_world.tscn")
+
+func _on_next_day_button_pressed():
+	GlobalConfig.days_left -= 1
+	GlobalConfig.reset_day()
+	GlobalConfig.just_returned_from_game_world = false
+	print("Day advanced! Days left: ", GlobalConfig.days_left)
+	# Update UI
+	display_time()
+	update_progress_bars()
+	cherry_button.visible = false
+	next_day_button.visible = false
