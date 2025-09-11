@@ -56,6 +56,15 @@ texture_normal = ExtResource("3_wbbl4")
 ignore_texture_size = true
 stretch_mode = 0
 
+[node name="NextDayButton" type="TextureButton" parent="."]
+offset_left = 200.0
+offset_top = -119.0
+offset_right = 265.0
+offset_bottom = -99.0
+texture_normal = ExtResource("3_wbbl4")
+ignore_texture_size = true
+stretch_mode = 0
+
 [node name="ground" type="StaticBody2D" parent="."]
 position = Vector2(194, 105.5)
 

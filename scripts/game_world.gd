@@ -6,6 +6,7 @@ extends Node2D
 }
 
 @onready var back_button = $BackButton
+@onready var next_day_button = $NextDayButton
 @onready var player = $character
 @onready var hp_bar = $hpBar
 @onready var music_timer = $Timer
@@ -61,10 +62,12 @@ func _ready():
 		load("res://assets/sounds/D#6.ogg")
 	]
 
-	# Show back button after 5 seconds
+	# Show buttons after 5 seconds
 	await get_tree().create_timer(5.0).timeout
 	back_button.visible = true
 	back_button.pressed.connect(_on_back_button_pressed)
+	next_day_button.visible = true
+	next_day_button.pressed.connect(_on_next_day_button_pressed)
 
 func _process(delta):
 	# Update HP bar
@@ -94,4 +97,12 @@ func _on_music_timer_timeout():
 	play_next_note()
 
 func _on_back_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
+
+func _on_next_day_button_pressed():
+	# Advance to next day
+	GlobalConfig.days_left -= 1
+	GlobalConfig.reset_day()
+	print("Day advanced! Days left: ", GlobalConfig.days_left)
+	# Return to main scene
 	get_tree().change_scene_to_file("res://scenes/game.tscn")

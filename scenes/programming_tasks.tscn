@@ -17,6 +17,7 @@ texture = ExtResource("1_q3d5q")
 script = ExtResource("2_b5eq2")
 
 [node name="User Thoughts" type="Label" parent="."]
+layout_mode = 0
 offset_left = 32.0
 offset_top = 277.0
 offset_right = 421.0

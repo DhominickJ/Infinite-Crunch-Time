@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://baj7ld6y3q4sl"]
+[gd_scene load_steps=15 format=3 uid="uid://baj7ld6y3q4sl"]
 
 [ext_resource type="Texture2D" uid="uid://c35kanw3tlvek" path="res://assets/objects/citybackground.png" id="1_iywne"]
 [ext_resource type="Script" uid="uid://0euxbx5caw8" path="res://scripts/main.gd" id="2_iywne"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://eua2c233jhn5" path="res://assets/icons/Pause.png" id="8_trtic"]
 [ext_resource type="Texture2D" uid="uid://slk5kfxuoxvx" path="res://assets/icons/Save.png" id="9_ir15t"]
 [ext_resource type="Texture2D" uid="uid://v3cox12lin8w" path="res://assets/objects/cherry.png" id="10_vtaks"]
+[ext_resource type="Texture2D" uid="uid://i3ajhrialfdp" path="res://assets/objects/green_button.png" id="14_trtic"]
 
 [node name="base_game" type="TextureRect"]
 anchors_preset = 15
@@ -178,6 +179,7 @@ theme_override_font_sizes/font_size = 20
 text = "Artworks"
 
 [node name="TextureRect" type="TextureRect" parent="ProgressBars/Artworks"]
+layout_mode = 0
 offset_left = 7.0
 offset_right = 57.0
 offset_bottom = 49.0
@@ -204,6 +206,7 @@ text = "Music Progress"
 horizontal_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="ProgressBars/Music/MusicLabel"]
+layout_mode = 0
 offset_left = -55.0
 offset_top = -11.0
 offset_right = -5.0
@@ -256,6 +259,28 @@ offset_right = 1123.0
 offset_bottom = 497.0
 texture_normal = ExtResource("10_vtaks")
 stretch_mode = 0
+
+[node name="Next Day Button" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 1316.0
+offset_top = 791.0
+offset_right = 1547.0
+offset_bottom = 864.0
+texture_normal = ExtResource("14_trtic")
+stretch_mode = 0
+
+[node name="Next Day" type="Label" parent="Next Day Button"]
+clip_contents = true
+custom_minimum_size = Vector2(20, 0)
+offset_left = 30.0
+offset_top = 18.0
+offset_right = 208.0
+offset_bottom = 54.0
+size_flags_horizontal = 10
+theme_override_fonts/font = ExtResource("2_opn0m")
+theme_override_font_sizes/font_size = 30
+text = "Next day >"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="ArtButton" to="." method="_on_art_button_pressed"]
 [connection signal="pressed" from="MusicButton" to="." method="_on_music_button_pressed"]

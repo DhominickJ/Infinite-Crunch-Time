@@ -19,10 +19,10 @@ var selected_index: int = -1
 
 
 func _ready() -> void:
-	timer.timeout.connect(Callable(self, "_on_timer_timeout"))
-	reset_button.pressed.connect(Callable(self, "_on_reset_pressed"))
-	skip_button.pressed.connect(Callable(self, "_on_skip_pressed"))
-	hint_button.pressed.connect(Callable(self, "_on_hint_pressed"))
+	timer.timeout.connect(_on_timer_timeout)
+	reset_button.pressed.connect(_on_reset_pressed)
+	skip_button.pressed.connect(_on_skip_pressed)
+	hint_button.pressed.connect(_on_hint_pressed)
 	_update_label()
 	load_possible_textures()
 	image_conversion()
@@ -145,7 +145,7 @@ func image_conversion():
 
 			# clickable via gui_input
 			tile.mouse_filter = Control.MOUSE_FILTER_STOP
-			tile.gui_input.connect(Callable(self, "_on_tile_gui_input").bind(tile))
+			tile.gui_input.connect(_on_tile_gui_input.bind(tile))
 
 			add_child(tile)
 			tile_nodes[grid_pos] = tile
@@ -176,7 +176,7 @@ func _create_palette(total_colors: int) -> void:
 		btn.add_theme_color_override("font_color", Color.BLACK)
 
 		# connect with bound index
-		btn.pressed.connect(Callable(self, "_on_palette_selected").bind(i))
+		btn.pressed.connect(_on_palette_selected.bind(i))
 		palette_panel.add_child(btn)
 
 
@@ -212,6 +212,10 @@ func _on_hint_pressed():
 			selected_index = tile.get_meta("number")
 			print("Hint: Selected color", selected_index)
 			return
+
+
+func _on_cherry_pressed():
+	get_tree().change_scene_to_file("res://scenes/game_world.tscn")
 
 
 func _on_tile_gui_input(event, tile):
@@ -270,31 +274,15 @@ func _check_completion():
 	for tile in tile_nodes.values():
 		if tile.get_meta("filled") == false:
 			return # stop early if we find at least one unfilled tile
-	print("Artwork task", GlobalConfig.artwork_tasks_completed + 1, "completed")
+	print("Artwork task completed")
 	GlobalConfig.artwork_tasks_completed += 1
-	GlobalConfig.current_time += 4  # Add 3 hours for each task
+	GlobalConfig.current_time += 4  # Add 4 hours for the task
 	# Store the completed asset
 	if selected_asset_name != "":
 		GlobalConfig.completed_art_assets.append(selected_asset_name)
-	if GlobalConfig.artwork_tasks_completed < 1:
-		# Reset for next task
-		for tile in tile_nodes.values():
-			tile.set_meta("filled", false)
-			var sb := StyleBoxFlat.new()
-			sb.bg_color = Color.WHITE
-			sb.border_color = Color.BLACK
-			sb.border_width_left = 1
-			sb.border_width_top = 1
-			sb.border_width_right = 1
-			sb.border_width_bottom = 1
-			tile.add_theme_stylebox_override("panel", sb)
-			var lbl := tile.get_node_or_null("LabelCenter/NumberLabel") as Label
-			if lbl:
-				lbl.visible = true
-		image_conversion()  # Load next image
-	else:
-		GlobalConfig.finished_artwork_task = true  # For compatibility
-		get_tree().change_scene_to_file("res://scenes/game.tscn")
+		print("Completed art asset: ", selected_asset_name)
+	# Since only 1 task, go back to main scene
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 
 func _on_timer_timeout():

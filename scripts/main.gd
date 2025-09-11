@@ -122,15 +122,10 @@ func update_progress_bars():
 
 func check_all_tasks_completed():
 	if GlobalConfig.is_all_tasks_completed():
-		print("All tasks completed! Advancing to next day...")
-		GlobalConfig.days_left -= 1
-		GlobalConfig.reset_day()
-		# Update UI
-		display_time()
-		update_progress_bars()
-		cherry_button.visible = false
-		cherry_button.disabled = true
-		print("Day advanced! Days left: ", GlobalConfig.days_left)
+		print("All tasks completed! Show cherry button to proceed to game world.")
+		cherry_button.visible = true
+		cherry_button.disabled = false
+		# Do not advance day here; let the game_world handle it
 
 func _on_cherry_button_pressed():
 	get_tree().change_scene_to_file("res://scenes/game_world.tscn")

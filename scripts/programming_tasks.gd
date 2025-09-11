@@ -20,21 +20,8 @@ var debug_dict =  [
 	\n\tvelocity.y += gravity * delta',
 	"problem" : "This is the entire code block of _physics_process(), but the character still doesn't fall down. What is missing?",
 	"choices" : ["move_and_slide()", "move()", "execute()", "print()"],
-	"correct_choice": "move_and_slide()"},
-	
-{
-	"program": '
-	var button_section = $HBoxContainer
-	\n\nfunc generate_buttons(item_array):
-	\nfor child in choices.get_children():
-		\n\tchild.queue_free()
-	\nfor item in item_array:
-		\n\tvar btn = Button.new()
-			\n\tbtn.text = item_array
-		\nbutton.add_child(btn)',
-	"problem":"I am trying to make a button, but it seems that there is a logic error. What should I fix?",
-	"choices": ["add_child", "btn", "child", "item"],
-	"correct_choice": "item"
+	"correct_choice": "move_and_slide()"
+}]
 
 #var Day1_3 = {
 	#"program": "",
@@ -42,7 +29,6 @@ var debug_dict =  [
 	#"choices": "",
 	#"correct_choice": ""
 #}
-}]
 
 func _ready():
 	load_dict(quiz_stage)
