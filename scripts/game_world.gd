@@ -5,6 +5,15 @@ extends Node2D
 	"slime": $slime
 }
 
+@onready var back_button = $BackButton
+@onready var player = $character
+@onready var hp_bar = $hpBar
+@onready var music_timer = $Timer
+@onready var music_player = $AudioStreamPlayer
+
+var current_note_index = 0
+var sounds = []
+
 # Static positions for dynamic sprites
 var asset_positions = {
 	"tree": Vector2(369, 40),
@@ -39,6 +48,19 @@ func _ready():
 	if GlobalConfig.music_sequence.size() > 0:
 		start_background_music()
 	
+	# Load sounds
+	sounds = [
+		load("res://assets/sounds/C#4.ogg"),
+		load("res://assets/sounds/D#4.ogg"),
+		load("res://assets/sounds/F#4.ogg"),
+		load("res://assets/sounds/A#5.ogg"),
+		load("res://assets/sounds/C#5.ogg"),
+		load("res://assets/sounds/D#5.ogg"),
+		load("res://assets/sounds/F#5.ogg"),
+		load("res://assets/sounds/C#6.ogg"),
+		load("res://assets/sounds/D#6.ogg")
+	]
+
 	# Show back button after 5 seconds
 	await get_tree().create_timer(5.0).timeout
 	back_button.visible = true

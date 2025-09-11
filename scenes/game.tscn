@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://baj7ld6y3q4sl"]
+[gd_scene load_steps=14 format=3 uid="uid://baj7ld6y3q4sl"]
 
 [ext_resource type="Texture2D" uid="uid://c35kanw3tlvek" path="res://assets/objects/citybackground.png" id="1_iywne"]
 [ext_resource type="Script" uid="uid://0euxbx5caw8" path="res://scripts/main.gd" id="2_iywne"]
@@ -7,8 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://bluhm1kxpmcso" path="res://assets/icons/Calendar.png" id="5_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://c833rgmh1kaof" path="res://assets/icons/Art Station.png" id="6_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://bgwn8tryx6ogw" path="res://assets/icons/Clock (Main) .png" id="6_vtaks"]
+[ext_resource type="Texture2D" uid="uid://c5i7cvtl0ex8a" path="res://assets/icons/Settings A.png" id="7_kvuet"]
 [ext_resource type="Texture2D" uid="uid://bhkl3j55d6k28" path="res://assets/icons/Music Station.png" id="7_vtaks"]
 [ext_resource type="Texture2D" uid="uid://oy6hg7ajrmoo" path="res://assets/icons/Program Station.png" id="8_kvpfn"]
+[ext_resource type="Texture2D" uid="uid://eua2c233jhn5" path="res://assets/icons/Pause.png" id="8_trtic"]
+[ext_resource type="Texture2D" uid="uid://slk5kfxuoxvx" path="res://assets/icons/Save.png" id="9_ir15t"]
 [ext_resource type="Texture2D" uid="uid://v3cox12lin8w" path="res://assets/objects/cherry.png" id="10_vtaks"]
 
 [node name="base_game" type="TextureRect"]
@@ -85,19 +88,31 @@ theme_override_fonts/font = ExtResource("2_opn0m")
 theme_override_font_sizes/font_size = 40
 text = "6:00       "
 
-[node name="FooterMargin" type="MarginContainer" parent="."]
-custom_minimum_size = Vector2(0, 200)
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Footer" type="HBoxContainer" parent="FooterMargin"]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-theme_override_constants/separation = 150
+offset_left = 35.0
+offset_top = 796.0
+offset_right = 235.0
+offset_bottom = 846.0
+
+[node name="SettingsButton" type="TextureButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture_normal = ExtResource("7_kvuet")
+stretch_mode = 0
+
+[node name="Pause" type="TextureButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture_normal = ExtResource("8_trtic")
+stretch_mode = 0
+
+[node name="Save" type="TextureButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture_normal = ExtResource("9_ir15t")
+stretch_mode = 0
 
 [node name="ProgressBars" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(200, 0)
@@ -111,6 +126,12 @@ offset_right = 350.0
 offset_bottom = 44.5
 grow_vertical = 2
 
+[node name="ProgrammingLabel" type="Label" parent="ProgressBars"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_opn0m")
+theme_override_font_sizes/font_size = 32
+text = "TODAY'S TASKS:"
+
 [node name="Programming" type="ProgressBar" parent="ProgressBars"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
@@ -121,13 +142,21 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -11.5
-offset_right = 106.0
-offset_bottom = 11.5
+offset_left = 61.0
+offset_top = -14.0
+offset_right = 208.0
+offset_bottom = 10.0
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_opn0m")
 theme_override_font_sizes/font_size = 20
 text = "Programming"
+
+[node name="TextureRect" type="TextureRect" parent="ProgressBars/Programming"]
+layout_mode = 0
+offset_left = 7.0
+offset_right = 57.0
+offset_bottom = 49.0
+texture = ExtResource("8_kvpfn")
 
 [node name="Artworks" type="ProgressBar" parent="ProgressBars"]
 custom_minimum_size = Vector2(0, 50)
@@ -139,13 +168,20 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -11.5
-offset_right = 142.0
-offset_bottom = 11.5
+offset_left = 60.0
+offset_top = -10.0
+offset_right = 287.0
+offset_bottom = 14.0
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_opn0m")
 theme_override_font_sizes/font_size = 20
-text = "Artworks Progress"
+text = "Artworks"
+
+[node name="TextureRect" type="TextureRect" parent="ProgressBars/Artworks"]
+offset_left = 7.0
+offset_right = 57.0
+offset_bottom = 49.0
+texture = ExtResource("6_0tnpc")
 
 [node name="Music" type="ProgressBar" parent="ProgressBars"]
 custom_minimum_size = Vector2(0, 50)
@@ -157,14 +193,22 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -11.5
-offset_right = 112.0
-offset_bottom = 11.5
+offset_left = 59.0
+offset_top = -11.0
+offset_right = 237.0
+offset_bottom = 13.0
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_opn0m")
 theme_override_font_sizes/font_size = 20
 text = "Music Progress"
 horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ProgressBars/Music/MusicLabel"]
+offset_left = -55.0
+offset_top = -11.0
+offset_right = -5.0
+offset_bottom = 38.0
+texture = ExtResource("7_vtaks")
 
 [node name="ArtButton" type="TextureButton" parent="."]
 layout_mode = 2

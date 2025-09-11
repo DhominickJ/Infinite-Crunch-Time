@@ -4,6 +4,9 @@ extends Control
 
 @onready var timer_label = $"../timer_label"
 @onready var timer = $"../timer_label/Timer"
+@onready var reset_button = $"../reset_button"
+@onready var skip_button = $"../skip_button"
+@onready var hint_button = $"../hint_button"
 var total_time = 120
 var possible_textures: Array = []
 var selected_asset_name: String = ""
@@ -16,7 +19,10 @@ var selected_index: int = -1
 
 
 func _ready() -> void:
-	timer.timeout.connect(_on_timer_timeout)
+	timer.timeout.connect(Callable(self, "_on_timer_timeout"))
+	reset_button.pressed.connect(Callable(self, "_on_reset_pressed"))
+	skip_button.pressed.connect(Callable(self, "_on_skip_pressed"))
+	hint_button.pressed.connect(Callable(self, "_on_hint_pressed"))
 	_update_label()
 	load_possible_textures()
 	image_conversion()
@@ -34,6 +40,11 @@ func load_possible_textures():
 		dir.list_dir_end()
 
 func image_conversion():
+	# Clean up old tiles
+	for tile in tile_nodes.values():
+		tile.queue_free()
+	tile_nodes.clear()
+
 	# SELECT RANDOM IMAGE, excluding completed assets
 	var img: Image
 	if possible_textures.size() > 0:
@@ -63,7 +74,7 @@ func image_conversion():
 	var img_h := img.get_height()
 
 	# --- DYNAMIC PIXEL SIZE ---
-	var target_size: Vector2 = get_parent().size
+	var target_size: Vector2 = get_viewport_rect().size
 	var scale_x: float = target_size.x / img_w
 	var scale_y: float = target_size.y / img_h
 	var pixel_size: int = int(min(scale_x, scale_y))
@@ -169,12 +180,41 @@ func _create_palette(total_colors: int) -> void:
 		palette_panel.add_child(btn)
 
 
-func _on_palette_selected(index: int) -> void:
+func _on_palette_selected(index):
 	selected_index = index
 	print("Selected color index:", index)
 
 
-func _on_tile_gui_input(event: InputEvent, tile: Panel) -> void:
+func _on_reset_pressed():
+	for tile in tile_nodes.values():
+		tile.set_meta("filled", false)
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color.WHITE
+		sb.border_color = Color.BLACK
+		sb.border_width_left = 1
+		sb.border_width_top = 1
+		sb.border_width_right = 1
+		sb.border_width_bottom = 1
+		tile.add_theme_stylebox_override("panel", sb)
+		var lbl := tile.get_node_or_null("LabelCenter/NumberLabel") as Label
+		if lbl:
+			lbl.visible = true
+	selected_index = -1
+
+
+func _on_skip_pressed():
+	image_conversion()
+
+
+func _on_hint_pressed():
+	for tile in tile_nodes.values():
+		if not tile.get_meta("filled"):
+			selected_index = tile.get_meta("number")
+			print("Hint: Selected color", selected_index)
+			return
+
+
+func _on_tile_gui_input(event, tile):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var tile_number: int = tile.get_meta("number")
 		if tile_number == selected_index:
@@ -182,7 +222,7 @@ func _on_tile_gui_input(event: InputEvent, tile: Panel) -> void:
 			_flood_fill(start_pos, tile_number)
 
 
-func _flood_fill(start_pos: Vector2i, num: int) -> void:
+func _flood_fill(start_pos, num):
 	var color: Color = index_to_color[num]
 	var queue: Array = [start_pos]
 	var visited: Dictionary = {}
@@ -226,13 +266,13 @@ func _flood_fill(start_pos: Vector2i, num: int) -> void:
 	print("Flood-filled region with number", num)
 
 
-func _check_completion() -> void:
+func _check_completion():
 	for tile in tile_nodes.values():
 		if tile.get_meta("filled") == false:
 			return # stop early if we find at least one unfilled tile
 	print("Artwork task", GlobalConfig.artwork_tasks_completed + 1, "completed")
 	GlobalConfig.artwork_tasks_completed += 1
-	GlobalConfig.current_time += 3  # Add 3 hours for each task
+	GlobalConfig.current_time += 4  # Add 3 hours for each task
 	# Store the completed asset
 	if selected_asset_name != "":
 		GlobalConfig.completed_art_assets.append(selected_asset_name)

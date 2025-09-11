@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4rso7wvmk1d1"]
+[gd_scene load_steps=4 format=3 uid="uid://y7p52csdlrk8"]
 
 [ext_resource type="Texture2D" uid="uid://v3cox12lin8w" path="res://assets/objects/cherry.png" id="1_dmcy2"]
-[ext_resource type="Script" uid="uid://ckxgo8j6oy3gt" path="res://scripts/cherry.gd" id="1_e05bo"]
+[ext_resource type="Script" path="res://scripts/cherry.gd" id="1_e05bo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e05bo"]
 

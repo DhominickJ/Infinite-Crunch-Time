@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://0le3lan8cwht"]
 
-[ext_resource type="Texture2D" uid="uid://dtwthtfvwws0w" path="res://assets/bg/green_bg.png" id="1_p7iqy"]
+[ext_resource type="Texture2D" uid="uid://dr7pje7ww06w1" path="res://assets/bg/untitled.png" id="1_q3d5q"]
 [ext_resource type="Script" uid="uid://dxjsjv74nohrf" path="res://scripts/programming_tasks.gd" id="2_b5eq2"]
 [ext_resource type="Texture2D" uid="uid://y4akwwgxlt5w" path="res://assets/objects/desktop_monitor.png" id="2_ggaot"]
 [ext_resource type="FontFile" uid="uid://bg727n08n56s2" path="res://fonts/depixel/DePixelHalbfett.otf" id="3_ggaot"]
@@ -13,8 +13,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_p7iqy")
+texture = ExtResource("1_q3d5q")
 script = ExtResource("2_b5eq2")
+
+[node name="User Thoughts" type="Label" parent="."]
+offset_left = 32.0
+offset_top = 277.0
+offset_right = 421.0
+offset_bottom = 369.0
+theme_override_fonts/font = ExtResource("6_q3d5q")
+theme_override_font_sizes/font_size = 30
+text = "POssible thoughts:"
+
+[node name="problem_note" type="RichTextLabel" parent="."]
+layout_mode = 2
+offset_left = 590.0
+offset_top = 156.0
+offset_right = 1447.0
+offset_bottom = 503.0
+grow_vertical = 0
+theme_override_fonts/normal_font = ExtResource("5_upao5")
+theme_override_font_sizes/normal_font_size = 20
+text = "Sample Note"
+tab_size = 7
 
 [node name="desktop_monitor" type="TextureRect" parent="."]
 layout_mode = 1
@@ -23,10 +44,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -800.0
-offset_top = -448.0
-offset_right = 800.0
-offset_bottom = 448.0
+offset_left = -589.0
+offset_top = -436.0
+offset_right = 1011.0
+offset_bottom = 460.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_ggaot")
@@ -52,20 +73,6 @@ theme_override_font_sizes/font_size = 17
 text = "Sample Text"
 placeholder_text = "Text here"
 
-[node name="problem_note" type="RichTextLabel" parent="."]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -446.0
-offset_right = 285.0
-grow_vertical = 0
-theme_override_fonts/normal_font = ExtResource("5_upao5")
-theme_override_font_sizes/normal_font_size = 20
-text = "Sample Note"
-tab_size = 7
-
 [node name="choices_container" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 7
@@ -73,19 +80,20 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -497.5
-offset_top = -334.0
-offset_right = 497.5
+offset_left = -281.0
+offset_top = -385.0
+offset_right = 714.0
+offset_bottom = -51.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
 [node name="timer_label" type="Label" parent="."]
 layout_mode = 1
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 399.0
-offset_bottom = 102.0
+offset_left = 49.0
+offset_top = 133.0
+offset_right = 438.0
+offset_bottom = 225.0
 theme_override_fonts/font = ExtResource("6_q3d5q")
 theme_override_font_sizes/font_size = 40
 text = "Time Left:"
